@@ -1,0 +1,74 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <link rel="stylesheet" href="/files/bootstrap.min.css">
+        <link rel="stylesheet" href="/files/bootstrap-theme.min.css">
+        <script src="/files/jquery-1.11.3.min.js"></script>
+        <script src="/files/bootstrap.min.js"></script>
+        <script src="/files/table.js"></script>
+        <style>
+            .input-group {
+                padding-top: 20px;
+            }
+        </style>
+        <title>关键词评审</title>
+    </head>
+    <body>
+        <div class="container page-header" id="control_container">
+            <h1 class="col-md-8">关键词评审</h1>
+
+            <div class="input-group col-md-4">
+
+                <span class="input-group-btn col-md-1">
+                    <div class="dropdown">
+                        <button class="btn btn-warning dropdown-toggle" type="button" id="dropdown_status" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            状态
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdown_status">
+                            <li><a href="#" class-"status_btn" code="0">待审</a></li>
+                            <li><a href="#" class="status_btn" code="1">选定</a></li>
+                            <li><a href="#" class="status_btn" code="2">删除</a></li>
+                            <li><a href="#" class="status_btn" code="">全部</a></li>
+                        </ul>
+                    </div>
+                </span>
+
+                <span class="input-group-addon">分类号</span>
+                <input type="text" id="cid" class="form-control" placeholder="想查看的分类号" aria-describedby="sizing-addon1">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" id="filter_btn">过滤</button>
+                </span>
+            </div>
+
+        </div>
+
+        <div class="container page-header" id="table_container">
+            <table class="table table-hover table-condensed" id="words_table"></table>
+        </div>
+
+        <div class="container" id="navi_container"></div>
+
+        <script>
+            var page_num = 1;
+            var line_num = 20;
+            var cid = "";
+            var status = "";
+            page(page_num, line_num, cid, status);
+            create_pager(cid, status, line_num, page_num, "navi_container");
+            $("#filter_btn").click(function(){
+                cid = $("#cid").val();
+                page(page_num, line_num, cid, status);
+            });
+            $(".dropdown-menu a").click(function(){
+                $(".dropdown-menu li").removeClass("disabled");
+                $(this).parent().addClass("disabled");
+                status = $(this).attr("code");
+                page(page_num, line_num, cid, status);
+                create_pager(cid, status, line_num, 1, "navi_container");
+            });
+        </script>
+
+    </body>
+</html>
